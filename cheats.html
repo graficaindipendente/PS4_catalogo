@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PS4 Cheats</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="cheats.css">
+  <link rel="shortcut icon" href="https://graficaindipendente.com/catalogo/assets/favicon.ico" />
+  <link rel="icon" type="image/png" href="https://graficaindipendente.com/catalogo/assets/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" sizes="180x180" href="https://graficaindipendente.com/catalogo/assets/favicon-180-precomposed.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://graficaindipendente.com/catalogo/assets/favicon-192.png">
+
+  <script>
+    function caricaFile() {
+      var url1 = 'https://raw.githubusercontent.com/GoldHEN/GoldHEN_Cheat_Repository/main/json.txt';
+      var url2 = 'https://raw.githubusercontent.com/GoldHEN/GoldHEN_Cheat_Repository/main/mc4.txt';
+      var url3 = 'https://raw.githubusercontent.com/GoldHEN/GoldHEN_Cheat_Repository/main/shn.txt';
+
+      Promise.all([
+        fetch(url1).then(response => response.text()),
+        fetch(url2).then(response => response.text()),
+        fetch(url3).then(response => response.text())
+      ])
+      .then(([contenuto1, contenuto2, contenuto3]) => {
+        document.getElementById('risultato1').textContent = contenuto1;
+        document.getElementById('risultato2').textContent = contenuto2;
+        document.getElementById('risultato3').textContent = contenuto3;
+      })
+      .catch(error => {
+        console.error('Errore durante il caricamento dei file:', error);
+      });
+    }
+    function cerca() {
+      var input = document.getElementById('inputRicerca').value.toLowerCase();
+      var contenutoPagina = document.documentElement.innerHTML.toLowerCase();
+      var risultatoDiv = document.getElementById('risultatoDiv');
+
+      var conteggioCorrispondenze = 0;
+
+      var contenutoEvidenziato = contenutoPagina.replace(new RegExp(input, 'gi'), function(match) {
+        conteggioCorrispondenze++;
+        return '<span class="highlight">' + match + '</span>';
+      });
+
+      if (conteggioCorrispondenze > 0) {
+        risultatoDiv.innerHTML = 'Corrispondenza trovata (' + conteggioCorrispondenze + ').';
+        document.documentElement.innerHTML = contenutoEvidenziato;
+      } else {
+        risultatoDiv.innerHTML = 'Nessuna corrispondenza trovata.';
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1 class="title">Load cheats list from Github</h1> 
+  <h6>Carica la lista direttamente da GitHub aggiornati.</h6>
+  <hr>
+
+
+<div class="bottone">
+  <button onclick="caricaFile()">Carica Lista</button> </div>
+  <div class="bottone"> <label for="inputRicerca"></label>
+  <input type="text" id="inputRicerca">
+  <button onclick="cerca()">Cerca</button></div><hr>
+  <div id="risultatoDiv"></div>
+
+  <div class="container">
+    <h2>JSON:</h2>
+    <pre id="risultato1"></pre>
+
+
+    <h2>MC4:</h2>
+    <pre id="risultato2"></pre>
+
+
+    <h2>SHN:</h2>
+    <pre id="risultato3"></pre>
+  </div>  </div>
+</body>
+</html>
